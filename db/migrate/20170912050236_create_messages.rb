@@ -8,7 +8,7 @@ class CreateMessages < ActiveRecord::Migration[5.1]
       t.integer :status,      null: false, default: 0, comment: '0 未读，1 已读，2 删除'
       t.text    :message,     null: false, comment: '消息内容'
 
-      t.timestamp
+      t.timestamps
     end
 
     add_index :messages, [:user_id, :status]

@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20170912050236) do
     t.integer "reciever_id", default: 0, null: false, comment: "接受者ID"
     t.integer "status", default: 0, null: false, comment: "0 未读，1 已读，2 删除"
     t.text "message", null: false, comment: "消息内容"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "status"], name: "index_messages_on_user_id_and_status"
   end
 
@@ -26,6 +28,8 @@ ActiveRecord::Schema.define(version: 20170912050236) do
     t.integer "user_id", default: 0, null: false, comment: "当前用户ID"
     t.integer "friend_id", default: 0, null: false, comment: "当前用户ID"
     t.integer "status", default: 0, null: false, comment: "好友状态, 0 好友 1 已删除"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "status"], name: "index_user_relations_on_user_id_and_status"
   end
 
