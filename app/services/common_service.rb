@@ -2,7 +2,7 @@ class CommonService
   delegate :success, :failure, to: :class
 
   class << self
-    def success(data = nil)
+    def success(data = {})
       {code: 0, message: 'success', data: data}
     end
 
