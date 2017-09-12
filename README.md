@@ -1,24 +1,133 @@
-# README
+## 私信系统
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> 背景
+>
+> - 假设users表已存在
+> - 暂无验签
+> - RESTful也是RPC的一种实现方式
+> - 非业务异常报错用于监控，如插入数据失败
+> - 进一步方案
+>   - 消息未读数量，后续可以用缓存
+>   - 对性能有要求时，可使用Redis
+> - 其他
+>   - 时间紧，没写测试，Sorry
+>   - 数据库连接池存在问题
+>   - 未进行压测
 
-Things you may want to cover:
+### 安装运行
+```ruby
+bundle install
+# 创建数据库
+rake db:create DB=true
+# 创建相关表
+rake db:migrate DB=true
 
-* Ruby version
+cd project_name/
+rails s
+# 另起一个窗口，运行客户端
+ruby client.rb
+```
 
-* System dependencies
 
-* Configuration
 
-* Database creation
+### 设计思路
 
-* Database initialization
+背景：周一周二空闲时间，时间紧
 
-* How to run the test suite
+1. 基于Rails，使用ActiveRecord进行数据库操作，快速实现业务逻辑；对比grpc等框架后，选择了Hprose RPC框架，一看即懂，快速上手；
+2. 私信存储和联系人关系都采用了数据冗余，以空间换取时间。满足私信业务查询。
+3. 具体表接口可参考Migration
 
-* Services (job queues, cache servers, search engines, etc.)
+### 接口文档
 
-* Deployment instructions
+##### 1. 获取联系人列表
 
-* ...
+###### 请求：
+
+###### 请求示例：
+
+###### 参数：
+
+| 参数       | 说明     | 备注   |
+| -------- | ------ | ---- |
+| user_id  | 当前用户ID |      |
+| page     | 当前页    |      |
+| per_page | 分页大小   |      |
+
+###### 返回结果：
+
+[
+
+{ friend_id: 111, unread_count: 1 },
+
+]
+
+###### 异常信息：
+
+
+
+##### 2. 添加新联系人
+
+参数：
+
+| 参数        | 说明     | 备注   |
+| --------- | ------ | ---- |
+| user_id   | 当前用户ID |      |
+| friend_id | 新联系人ID |      |
+
+
+
+##### 3. 删除联系人
+
+参数：
+
+| 参数        | 说明     | 备注   |
+| --------- | ------ | ---- |
+| user_id   | 当前用户ID |      |
+| friend_id | 联系人ID  |      |
+
+##### 4. 发送私信
+
+参数：
+
+| 参数        | 说明     | 备注   |
+| --------- | ------ | ---- |
+| user_id   | 当前用户ID |      |
+| friend_id | 联系人ID  |      |
+| content   | 消息内容   | 仅文字  |
+
+
+
+##### 5. 获取与指定用户的私信历史记录
+
+参数：
+
+| 参数        | 说明     | 备注   |
+| --------- | ------ | ---- |
+| user_id   | 当前用户ID |      |
+| friend_id | 新联系人ID |      |
+| page      | 当前页    |      |
+| per_page  | 分页大小   |      |
+
+
+
+##### 6. 标记私信为已读
+
+参数：
+
+| 参数         | 说明     | 备注   |
+| ---------- | ------ | ---- |
+| user_id    | 当前用户ID |      |
+| message_id | 消息内容ID |      |
+
+
+
+##### 7. 删除私信
+
+参数：
+
+| 参数         | 说明     | 备注   |
+| ---------- | ------ | ---- |
+| user_id    | 当前用户ID |      |
+| message_id | 消息内容ID |      |
+
