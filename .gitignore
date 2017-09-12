@@ -21,3 +21,5 @@
 
 /public
 /vendor
+
+/config/database.yml
