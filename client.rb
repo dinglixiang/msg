@@ -25,11 +25,6 @@ user.add_friend_with(1, 2) { |result|
   puts result
 }.join
 
-user.add_friend_with(1, 3) { |result|
-  puts '==添加联系人=='
-  puts result
-}.join
-
 # 删除联系人
 # @params: user_id, friend_id
 user.remove_friend_with(1, 3) { |result|
@@ -39,14 +34,14 @@ user.remove_friend_with(1, 3) { |result|
 
 # 发送消息
 # @params: user_id, friend_id, content
-msg.send_msg(1, 4, 'test content') { |result|
+msg.send_msg(1, 2, 'test content') { |result|
   puts '==发送消息=='
   puts result
 }.join
 
 # 获取与指定联系人的私信记录
 # @params: user_id, friend_id
-msg.fetch_histories(2, 3) { |result|
+msg.fetch_histories(1, 2) { |result|
   puts '==获取私信记录=='
   puts result
 }.join
