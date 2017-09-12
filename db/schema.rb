@@ -12,21 +12,22 @@
 
 ActiveRecord::Schema.define(version: 20170912050236) do
 
-  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "msgs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", default: 0, null: false, comment: "发送者ID"
     t.integer "friend_id", default: 0, null: false, comment: "接收者ID"
     t.integer "sender_id", default: 0, null: false, comment: "发送者ID"
     t.integer "reciever_id", default: 0, null: false, comment: "接受者ID"
     t.integer "status", default: 0, null: false, comment: "0 未读，1 已读，2 删除"
-    t.text "message", null: false, comment: "消息内容"
+    t.text "content", null: false, comment: "消息内容"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "status"], name: "index_messages_on_user_id_and_status"
+    t.index ["sender_id", "status", "reciever_id"], name: "index_msgs_on_sender_id_and_status_and_reciever_id"
+    t.index ["user_id", "status", "friend_id"], name: "index_msgs_on_user_id_and_status_and_friend_id"
   end
 
   create_table "user_relations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "user_id", default: 0, null: false, comment: "当前用户ID"
-    t.integer "friend_id", default: 0, null: false, comment: "当前用户ID"
+    t.integer "user_id", default: 0, null: false, comment: "用户ID"
+    t.integer "friend_id", default: 0, null: false, comment: "联系人ID"
     t.integer "status", default: 0, null: false, comment: "好友状态, 0 好友 1 已删除"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
