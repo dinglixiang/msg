@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912044452) do
+ActiveRecord::Schema.define(version: 20170912050236) do
+
+  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id", default: 0, null: false, comment: "发送者ID"
+    t.integer "friend_id", default: 0, null: false, comment: "接收者ID"
+    t.integer "sender_id", default: 0, null: false, comment: "发送者ID"
+    t.integer "reciever_id", default: 0, null: false, comment: "接受者ID"
+    t.integer "status", default: 0, null: false, comment: "0 未读，1 已读，2 删除"
+    t.text "message", null: false, comment: "消息内容"
+    t.index ["user_id", "status"], name: "index_messages_on_user_id_and_status"
+  end
 
   create_table "user_relations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", default: 0, null: false, comment: "当前用户ID"
