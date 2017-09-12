@@ -8,6 +8,6 @@ class CreateUserRelations < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :user_relations, [:user_id, :status]
+    add_index :user_relations, [:user_id, :status, :friend_id]
   end
 end
